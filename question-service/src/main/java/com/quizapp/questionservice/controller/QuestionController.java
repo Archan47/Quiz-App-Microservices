@@ -1,13 +1,12 @@
 package com.quizapp.questionservice.controller;
 
 import com.quizapp.questionservice.entity.Question;
+import com.quizapp.questionservice.entity.QuestionWrapper;
+import com.quizapp.questionservice.entity.Response;
 import com.quizapp.questionservice.services.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,6 +30,21 @@ public class QuestionController {
     @GetMapping("/allQuestions/{category}/{difficultyLevel}")
     public ResponseEntity <List<Question>> getQuestionsByLevel(@PathVariable String category ,@PathVariable String difficultyLevel){
         return questionService.getLevelWiseQuestions(category,difficultyLevel);
+    }
+
+    @GetMapping("/create")
+    public ResponseEntity<List<Integer>> getQuestionsForQuiz(@RequestParam String categoryName,@RequestParam Integer numOfQuestions){
+        return questionService.getQuestionsForQuiz(categoryName,numOfQuestions);
+    }
+
+    @PostMapping("/getQuizQuestions")
+    public  ResponseEntity<List<QuestionWrapper>> getQuestionFromId(@RequestBody List<Integer> questionsIds){
+        return questionService.getQuestionFromIds(questionsIds);
+    }
+
+    @PostMapping("/getScore")
+    public ResponseEntity<Integer> getScore(@RequestBody List<Response> responses){
+        return questionService.getScore(responses);
     }
 
 

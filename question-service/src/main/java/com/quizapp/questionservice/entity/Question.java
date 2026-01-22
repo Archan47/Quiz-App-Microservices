@@ -35,4 +35,5 @@ public class Question {
 
     @Column(name = "category")
     private String category;
+
 }
